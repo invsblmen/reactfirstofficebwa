@@ -39,7 +39,7 @@ export default function BookOffice() {
         console.log("Office data fetched successfully:", response.data.data);
         setOffice(response.data.data);
 
-        const officeSpceId = response.data.data.id;
+        const officeSpaceId = response.data.data.id;
         const generatedUniqueCode = Math.floor(100 + Math.random() * 900); // Random 3-digit code
         const grandTotal = response.data.data.price - generatedUniqueCode;
 
@@ -48,7 +48,7 @@ export default function BookOffice() {
 
         setFormData((prevData) => ({
           ...prevData,
-          office_space_id: officeSpceId,
+          office_space_id: officeSpaceId,
           total_amount: grandTotal,
         }));
 
@@ -121,6 +121,7 @@ export default function BookOffice() {
       // handle success (e.g., show success message or redirect)
 
       // redirect to the success page with the office and booking detail
+      console.log("data response", response.data.data);
       navigate("/success-booking", {
         state: {
           office,

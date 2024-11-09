@@ -6,6 +6,7 @@ export default function SuccessBooking() {
   const location = useLocation();
   const { office, booking } = location.state;
   const baseUrl = "http://laravel11_firstofficebebwa.test/storage";
+  console.log("data state : ",location.state);
 
   return (
     <>
