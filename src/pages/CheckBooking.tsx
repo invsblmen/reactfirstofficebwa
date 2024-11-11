@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Navbar from "../components/NavBar";
+import Navbar from "../components/Navbar";
 import { z } from "zod";
 import { BookingDetails } from "../types/type";
 import { viewBookingSchema } from "../types/validationBooking";

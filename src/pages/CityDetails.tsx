@@ -3,7 +3,7 @@ import { City } from "../types/type";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import OfficeCard from "../components/OfficeCard";
-import Navbar from "../components/NavBar";
+import Navbar from "../components/Navbar";
 
 export default function CityDetails() {
 

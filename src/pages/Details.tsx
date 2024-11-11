@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import Navbar from "../components/NavBar";
+import Navbar from "../components/Navbar";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Office } from "../types/type";
