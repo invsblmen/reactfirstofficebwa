@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Office } from "../types/type";
 import { z } from "zod";
 import { bookingSchema } from "../types/validationBooking";
+import apiClient, { isAxiosError } from "../services/apiService";
 
 export default function BookOffice() {
 
@@ -29,12 +30,8 @@ export default function BookOffice() {
 
   useEffect(() => {
     console.log("Fetching office data...")
-    axios
-      .get(`http://laravel11_firstofficebebwa.test/api/office/${slug}`, {
-        headers: {
-          "X-API-KEY": "dsajdkadjak12132131",
-        },
-      })
+    apiClient
+      .get(`/office/${slug}`)
       .then((response) => {
         console.log("Office data fetched successfully:", response.data.data);
         setOffice(response.data.data);
@@ -104,16 +101,11 @@ export default function BookOffice() {
     setIsLoading(true); // Set loading state is true
 
     try {
-      const response = await axios.post(
-        "http://laravel11_firstofficebebwa.test/api/booking-transaction",
+      const response = await apiClient.post(
+        "/booking-transaction",
         {
           ...formData,
           // The rest of the field is handled on the backend
-        },
-        {
-          headers: {
-            "X-API-KEY": "dsajdkadjak12132131",
-          },
         }
       );
 
@@ -129,7 +121,7 @@ export default function BookOffice() {
         },
       });
     } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
+      if (isAxiosError(error)) {
         console.error("Error submitting form:", error.message);
         setError(error.message);
       } else {
@@ -206,10 +198,10 @@ export default function BookOffice() {
                   className="appearance-none outline-none w-full py-3 font-semibold placeholder:font-normal placeholder:text-[#000929]"
                   placeholder="Write your complete name"
                 />
-                {formErrors.find((error) => error.path.includes("name")) && (
-                  <p className="text-red-500">Name is required</p>
-                )}
               </div>
+                {formErrors.find((error) => error.path.includes("name")) && (
+                  <p className="text-[#FF2D2D]">Name is required</p>
+                )}
             </div>
             <div className="flex flex-col gap-2">
               <label htmlFor="phone" className="font-semibold">
@@ -230,10 +222,10 @@ export default function BookOffice() {
                   className="appearance-none outline-none w-full py-3 font-semibold placeholder:font-normal placeholder:text-[#000929]"
                   placeholder="Write your valid number"
                 />
-                {formErrors.find((error) => error.path.includes("phone_number")) && (
-                  <p className="text-red-500">Phone number is required</p>
-                )}
               </div>
+                {formErrors.find((error) => error.path.includes("phone_number")) && (
+                  <p className="text-[#FF2D2D]">Phone number is required</p>
+                )}
             </div>
             <div className="flex flex-col gap-2">
               <label htmlFor="date" className="font-semibold">
@@ -253,10 +245,10 @@ export default function BookOffice() {
                   id="date"
                   className="relative appearance-none outline-none w-full py-3 font-semibold [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:opacity-0"
                 />
-                {formErrors.find((error) => error.path.includes("date")) && (
-                  <p className="text-red-500">Started at is required</p>
-                )}
               </div>
+                {formErrors.find((error) => error.path.includes("started_at")) && (
+                  <p className="text-[#FF2D2D]">Started at is required</p>
+                )}
             </div>
           </div>
           <hr className="border-[#F6F5FD]" />

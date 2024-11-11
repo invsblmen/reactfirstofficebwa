@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import { z } from "zod";
 import { BookingDetails } from "../types/type";
 import { viewBookingSchema } from "../types/validationBooking";
-import axios from "axios";
+import apiClient, { isAxiosError } from "../services/apiService";
 
 export default function CheckBooking() {
 
@@ -41,22 +41,17 @@ export default function CheckBooking() {
     setIsLoading(true); // set loading state to true
 
     try {
-      const response = await axios.post(
-        "http://laravel11_firstofficebebwa.test/api/check-booking",
+      const response = await apiClient.post(
+        "/check-booking",
         {
           ...formData,
-        },
-        {
-          headers: {
-            "X-API-KEY": "dsajdkadjak12132131",
-          }
         }
       );
 
       console.log("We are checking your booking:", response.data.data);
       setBookingDetails(response.data.data);
     } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
+      if (isAxiosError(error)) {
         console.error("Error submitting form:", error.message);
         setError(error.message);
       } else {
@@ -156,7 +151,7 @@ export default function CheckBooking() {
               <div className="flex items-center gap-4">
                 <div className="flex shrink-0 w-[140px] h-[100px] rounded-[20px] overflow-hidden">
                   <img
-                    src="assets/images/thumbnails/thumbnail-details-4.png"
+                    src={`${baseUrl}/${bookingDetails.office.thumbnail}`}
                     className="w-full h-full object-cover"
                     alt="thumbnail"
                   />

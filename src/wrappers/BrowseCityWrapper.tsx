@@ -2,8 +2,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import CityCard from "../components/CityCard";
 import { useEffect, useState } from "react";
 import { City } from "../types/type";
-import axios from "axios";
 import { Link } from "react-router-dom";
+import apiClient from "../services/apiService";
 
 export default function BrowseCityWrapper() {
   const [cities, setCities] = useState<City[]>([]);
@@ -13,12 +13,8 @@ export default function BrowseCityWrapper() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    axios
-      .get("http://laravel11_firstofficebebwa.test/api/cities", {
-        headers: {
-          "X-API-KEY": "dsajdkadjak12132131",
-        },
-      })
+    apiClient
+      .get("/cities")
       .then((response) => {
         setCities(response.data.data);
         setLoading(false);
@@ -62,7 +58,7 @@ export default function BrowseCityWrapper() {
           >
             {cities.map((city) => (
               <SwiperSlide key={city.id} className="!w-fit first-of-type:pl-[calc((100%-1130px-60px)/2)] last-of-type:pr-[calc((100%-1130px-60px)/2)]">
-                <Link key={city.id} to={`/city/${city.slug}`}>
+                <Link to={`/city/${city.slug}`}>
                   <CityCard city={city}></CityCard>
                 </Link>
               </SwiperSlide>

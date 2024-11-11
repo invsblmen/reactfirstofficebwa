@@ -1,9 +1,9 @@
 import { Link, useParams } from "react-router-dom";
 import { City } from "../types/type";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import OfficeCard from "../components/OfficeCard";
 import Navbar from "../components/Navbar";
+import apiClient from "../services/apiService";
 
 export default function CityDetails() {
 
@@ -13,12 +13,8 @@ export default function CityDetails() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    axios
-      .get(`http://laravel11_firstofficebebwa.test/api/city/${slug}`, {
-        headers: {
-          "X-API-KEY": "dsajdkadjak12132131",
-        },
-      })
+    apiClient
+      .get(`/city/${slug}`)
       .then((response) => {
         setCity(response.data.data);
         setLoading(false);
@@ -82,7 +78,7 @@ export default function CityDetails() {
         </h2>
         <div className="grid grid-cols-3 gap-[30px]">
           {city.officeSpaces.map((office) => (
-            <Link to={`/office/${office.slug}`}>
+            <Link key={office.id} to={`/office/${office.slug}`}>
               <OfficeCard office={office}></OfficeCard>
             </Link>
           ))}

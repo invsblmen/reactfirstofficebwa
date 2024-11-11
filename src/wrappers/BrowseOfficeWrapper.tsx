@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import OfficeCard from "../components/OfficeCard"
-import axios from "axios";
 import { Office } from "../types/type";
 import { Link } from "react-router-dom";
+import apiClient from "../services/apiService";
 
 export default function BrowseOfficeWrapper() {
 
@@ -13,12 +13,8 @@ export default function BrowseOfficeWrapper() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    axios
-      .get("http://laravel11_firstofficebebwa.test/api/offices", {
-        headers: {
-          "X-API-KEY": "dsajdkadjak12132131",
-        },
-      })
+    apiClient
+      .get("/offices")
       .then((response) => {
         setOffices(response.data.data);
         setLoading(false);

@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Office } from "../types/type";
-import axios from "axios";
+import apiClient from "../services/apiService";
 
 export default function Details() {
 
@@ -13,12 +13,8 @@ export default function Details() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    axios
-      .get(`http://laravel11_firstofficebebwa.test/api/office/${slug}`, {
-        headers: {
-          "X-API-KEY": "dsajdkadjak12132131",
-        },
-      })
+    apiClient
+      .get(`/office/${slug}`)
       .then((response) => {
         setOffice(response.data.data);
         setLoading(false);
